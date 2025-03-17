@@ -109,8 +109,9 @@ if __name__ == '__main__':
   for t, (image_file) in tqdm.tqdm(enumerate(image_list)):
     image = cv2.imread(image_file)[..., ::-1]  # rgb
     h0, w0, _ = image.shape
-    h1 = int(h0 * np.sqrt((384 * 512) / (h0 * w0)))
-    w1 = int(w0 * np.sqrt((384 * 512) / (h0 * w0)))
+    h1, w1 = h0, w0
+    # h1 = int(h0 * np.sqrt((384 * 512) / (h0 * w0)))
+    # w1 = int(w0 * np.sqrt((384 * 512) / (h0 * w0)))
     image = cv2.resize(image, (w1, h1))
     image = image[: h1 - h1 % 8, : w1 - w1 % 8].transpose(2, 0, 1)
     img_data.append(image)

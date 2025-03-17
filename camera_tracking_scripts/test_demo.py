@@ -76,8 +76,9 @@ def image_stream(
 
     # breakpoint()
     h0, w0, _ = image.shape
-    h1 = int(h0 * np.sqrt((384 * 512) / (h0 * w0)))
-    w1 = int(w0 * np.sqrt((384 * 512) / (h0 * w0)))
+    # h1 = int(h0 * np.sqrt((384 * 512) / (h0 * w0)))
+    # w1 = int(w0 * np.sqrt((384 * 512) / (h0 * w0)))
+    h1, w1 = h0, w0
 
     image = cv2.resize(image, (w1, h1), interpolation=cv2.INTER_AREA)
     image = image[: h1 - h1 % 8, : w1 - w1 % 8]
@@ -313,6 +314,7 @@ if __name__ == "__main__":
     # breakpoint()
     if t == 0:
       args.image_size = [image.shape[2], image.shape[3]]
+      print("image_size ", args.image_size)
       droid = Droid(args)
 
     droid.track(t, image, depth, intrinsics=intrinsics, mask=mask)
