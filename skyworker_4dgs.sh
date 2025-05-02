@@ -19,22 +19,29 @@
 #   movi_a_0001
 # )
 
-for i in {1..9}
+for i in {63..99}
 do
-  evalset+=("movi_a_000$i")
+  evalset+=("movi_a_00$i")
 done
 
 # Main directory
-DATA_DIR=/home/skyworker/data/sets/movie_a/train/
+DATA_DIR=/home/skyworker/data/sets/movie_a/train
 CKPT_PATH=checkpoints/megasam_final.pth
 
 for seq in ${evalset[@]}; do
+
+  # if [ ! -f "$DATA_DIR/$seq/" ]; then
+  #       echo "Warning: $DATA_DIR/$seq/ no such folder or directory!" >&2
+  #       exit 1  # Exit with error code 1
+  # fi
+
   # Organize the data
   mkdir -p $DATA_DIR/$seq/images/seq1
   mkdir -p $DATA_DIR/$seq/ano
+  mkdir -p $DATA_DIR/$seq/original
   mv $DATA_DIR/$seq/*.jpg $DATA_DIR/$seq/images/seq1
   mv $DATA_DIR/$seq/*.png $DATA_DIR/$seq/ano
-  rm -f $DATA_DIR/$seq/*.npz
+  mv $DATA_DIR/$seq/*.npz $DATA_DIR/$seq/original
 
   # Extract masks
   python ano_mask.py --dir $DATA_DIR/$seq
